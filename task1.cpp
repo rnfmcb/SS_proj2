@@ -1,6 +1,5 @@
-// Basic use of openssl library function SHA256
-// by Mark Hauschild
-#include "ssfun.h"
+// Software Security Project  
+// Rachel Festervand and Grayson Hart 
 //#include <openssl/sha.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,24 +9,28 @@
 using namespace std;
 
 int main() {
-	char orig[SIZE];
-	
-	cout << "Please enter string to hash:";
 
-	cin.getline(orig,SIZE);
 
-	// Will hold string, so should be size of our max string
-	unsigned char ibuf[SIZE];
+         //Ask user to login or create account 
+         int login[2]; 
+         cout << "Type 0 to login and 1 to create a new account";  
+         cin.getline(login,SIZE);  
+           if(login == 0){ //login 
+              //Get user  name  
+	      char username[SIZE];	
+	      cout << "Please enter user name";
+              cin.getline(username,SIZE);
+	      // Will hold string for user  
+              unsigned char usernamebuf[SIZE];
+                 for(int i = 0; i < 100; i++){
+                   usernamebuf[i] = username[i]; 
+                 } 
+                      
 
 	// SHA256 hash, so only needs to be 32 bytes
-	unsigned char hashbuf[32];
-
-	// copy over string to buffer
-	for (int i = 0; i < 100; i++) {
-		ibuf[i] = orig[i];
-	}
+	//unsigned char hashbuf[32];
 	
-	cout << "Before hash:" << endl;
+	/*cout << "Before hash:" << endl;
 	for (int i = 0; i < strlen(orig); i++) {
 		printf("%02x ", ibuf[i]);
 	}
@@ -41,6 +44,6 @@ int main() {
 		printf("%02x ", hashbuf[i]);
 	}
 
-	printf("\n");
+	printf("\n");*/
 	return 0;
 }
