@@ -7,6 +7,12 @@
 
 #define SIZE 100
 using namespace std;
+struct user_t {
+	char username[100];
+	char plaintextPass[100];
+	char hashedPass[100];
+}user;
+
 
 int main() {
 
