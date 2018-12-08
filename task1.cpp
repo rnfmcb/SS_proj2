@@ -3,7 +3,7 @@
 //#include <openssl/sha.h>
 #include <stdio.h>
 #include <string.h>
-#include <iostream>
+#include <iostream> 
 
 #define SIZE 100
 using namespace std;
@@ -18,7 +18,7 @@ int main() {
 
 
          //Ask user to login or create account 
-         int login[2]; 
+         char login[SIZE]; 
          cout << "Type 0 to login and 1 to create a new account";  
          cin.getline(login,SIZE);  
            if(login == 0){ //login 
@@ -31,7 +31,7 @@ int main() {
                  for(int i = 0; i < 100; i++){
                    usernamebuf[i] = username[i]; 
                  } 
-                      
+             }                       
 
 	// SHA256 hash, so only needs to be 32 bytes
 	//unsigned char hashbuf[32];
