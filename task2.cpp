@@ -17,11 +17,11 @@ struct user_t {
 }user;
 
 void gen_username(char *s, const int len){
-	static const alplhanum[] = 
+	static const char alphanum[] = 
 		"0123456789"
 		"abcdefghijklmnopqrstuvwxyz";
 	for(int i = 0; i < len; ++i){
-		s[i] = alphanum[rand()%(sizeof(alphanum)-1]
+		s[i] = alphanum[rand()%(sizeof(alphanum)-1)];
 	}
 	s[len] = 0;
 }
@@ -48,19 +48,13 @@ int main() {
 	char salt[20];
 	unsigned char ibuf[SIZE];
 	
-	int login; 
-	cout << "Type 1 to login and 0 to create a new account:" << endl; 
-	cin >> login;  
-	if(login == 0){ //login 
-		cout << "Please enter an eight charactor aphaneumeric user name\n";
-		cin.ignore(100,'\n');
-		cin.getline(user.username,SIZE);
-                
-    
-		cout << "Please enter an eight charactor alphaneumeric password. Please no capital letters\n";	//You may be wondering how this works
-		cin.getline(user.plaintextPass,SIZE);   
-
-		cout << endl;		
+	
+	for(int i = 0; i < 100; i++){
+		int passnum = (rand()%6)+3; //Password limit 3 - 8 characters
+		int namenum = (rand()%6)+3; //name num
+		
+                gen_username(user.username, namenum);
+    		gen_random(user.plaintextPass, passnum);
 		
 		SHA256(ibuf,strlen(user.plaintextPass),user.hashedPass); //This hashes the password with NO salt
 		
@@ -74,94 +68,59 @@ int main() {
 		for(int i = strlen(user.plaintextPass); i < combinedSize; ++i){ //this adds the salt to the end of the users password length. Note the ++i
 			user.plaintextPass[i] = salt[i - passSize];
 		}
-		for(int i = 0; i < strlen(user.plaintextPass); i++){ //this prints out the plaint text password
-			cout << user.plaintextPass[i];
-		}
-		cout <<endl;
-		for(int i = 0; i < strlen(salt); i++){ //this prints out the salt
-			cout << salt[i];
-		}
+
 		for(int i = 0; i < strlen(user.plaintextPass); i++){ //this assigns ibuf to the new password which is plaintext + salt
 			ibuf[i] = user.plaintextPass[i];
 		}
-		SHA256(ibuf,strlen(user.plaintextPass),user.hashedPass); //calling hash function again on salted string
-		cout << endl;	
+
+		SHA256(ibuf,strlen(user.plaintextPass),user.hashedPass); //calling hash function again on salted string	
 		writeToPass3(user); 	//writes the third file
 					//so I also realised that salt is actually stored with your account, and when you log in it adds it to the end of your pass then hashes it to verify
 					//I dont think we need to store the salt since we have all three files to work with
-					//also, theres a bunch of openssl salting stuff but I wasnt too familiar and frankly didnt care becaause this popped in my head first. . 
-		
-	} else if (login == 1) { 
-             //Ask for user name 
-		char newName[SIZE]; 
-		cout << "Enter a user name\n"; 
-		cin.getline(newName, SIZE);
-		cin.get();  
-                //Checks if username is valid 
-                int isUser = 0; 
-    		for(int i = 0; i < SIZE; i++){ 
- 		  if(newName[i] != user.username[i])
-                    isUser = 1; 
-       	        }
-		//writeToPass1(user); 
-       	         //Get a password
-		char newPassword[SIZE]; 
-		cout << "Enter a password\n"; 
-		cin.getline(newPassword,SIZE);
-		cin.get();  
-                //Checks if password is valid 
-                int isPassword; 
-		  for(int i = 0; i < SIZE; i++){ 
-		     if(newName[i] != user.username[i]) 
-                       isPassword = 1; 
-		}
-               //Prints an error if password or username is invalid 
-               if(isPassword == 1 || isUser == 1)
- 	           cout << "Username or Password is invalid" << endl;
-               else 
- 	           cout << "Successful Login" << endl;   
-	       //writeToPass1(user); 
-        } 	
+					//also, theres a bunch of openssl salting stuff but I wasnt too familiar and frankly didnt care becaause this popped in my head first. . 	
+	 }
+
 	return 0;
 }
 
 void writeToPass1(user_t user){
 	ofstream myfile;
-	myfile.open("pass1.txt");
-	myfile << user.username; 
+	myfile.open("pass1.txt",std::ios_base::app);
+	myfile.write(user.username, strlen(user.username));
+	//myfile << user.username; 
 	myfile << " ";
-	myfile << user.plaintextPass << endl;
-	myfile.close();
+	myfile.write(user.plaintextPass, strlen(user.plaintextPass));
+	myfile << "\n";
+	//myfile.close();
+	//myfile.clear();
 }
 	
 void writeToPass2(user_t user){
 	char hexBuffer[128];
 	hexBuffer[127] = 0;
 	ofstream myfile;
-	myfile.open("pass2.txt");
-	myfile << user.username;
+	myfile.open("pass2.txt", std::ios_base::app);
+	myfile.write(user.username, strlen(user.username));
 	myfile << " ";
 	for(int i = 0; i < 32; i++){
 		sprintf(&hexBuffer[2*i], "%02x ", user.hashedPass[i]);
 	}
-	myfile << hexBuffer;
-	myfile << "" << endl;
-	myfile.close();
+	myfile.write(hexBuffer, strlen(hexBuffer)); 
+	myfile << "\n";
 }
 
 void writeToPass3(user_t user){
 	char hexBuffer[128];
         hexBuffer[127] = 0;
         ofstream myfile;
-        myfile.open("pass3.txt");
-        myfile << user.username;
+        myfile.open("pass3.txt", std::ios_base::app);
+        myfile.write(user.username, strlen(user.username));
         myfile << " ";
         for(int i = 0; i < 32; i++){
                 sprintf(&hexBuffer[2*i], "%02x ", user.hashedPass[i]);
         }
-        myfile << hexBuffer;
-        myfile << "" << endl;
-        myfile.close();
+        myfile.write(hexBuffer, strlen(hexBuffer));
+        myfile << "\n";
 }
 
 //Validates passwords and usernames. Returns true if valid 
