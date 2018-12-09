@@ -82,50 +82,36 @@ int main() {
 					//also, theres a bunch of openssl salting stuff but I wasnt too familiar and frankly didnt care becaause this popped in my head first. . 
 		
 	} else if (login == 1) { 
-             //Ask for user nbame 
+             //Ask for user name 
 		char newName[SIZE]; 
 		cout << "Enter a user name\n"; 
 		cin.getline(newName, SIZE);
 		cin.get();  
-       	       //Holds string for new user
-		unsigned char newNamebuf[SIZE]; 
-		for(int i = 0; i < 100; i++){
-			user.username[i] = newName[i]; 
-		} 
-		writeToPass1(user); 
+                //Checks if username is valid 
+                int isUser = 0; 
+    		for(int i = 0; i < SIZE; i++){ 
+ 		  if(newName[i] != user.username[i])
+                    isUser = 1; 
+       	        }
+		//writeToPass1(user); 
        	         //Get a password
 		char newPassword[SIZE]; 
 		cout << "Enter a password\n"; 
 		cin.getline(newPassword,SIZE);
 		cin.get();  
-	//Holds string for new password
-		unsigned char newPasswordbuf[SIZE]; 
-		for(int i = 0; i < 100; i++){ 
-			user.plaintextPass[i] = newPassword[i]; 
-		} 
-		writeToPass1(user); 
-        }    
-
-	// SHA256 hash, so only needs to be 32 bytes
-	//
-	//unsigned char hashbuf[32];
-	
-	/*cout << "Before hash:" << endl;
-	for (int i = 0; i < strlen(orig); i++) {
-		printf("%02x ", ibuf[i]);
-	}
-	cout << endl;
-	
-	SHA256(ibuf, strlen(orig), hashbuf);
-
-	cout << "After hash:" << endl;
-
-	for (int i = 0; i < 32; i++) {
-		printf("%02x ", hashbuf[i]);
-	}
-	
-
-	printf("\n");*/
+                //Checks if password is valid 
+                int isPassword; 
+		  for(int i = 0; i < SIZE; i++){ 
+		     if(newName[i] != user.username[i]) 
+                       isPassword = 1; 
+		}
+               //Prints an error if password or username is invalid 
+               if(isPassword == 1 || isUser == 1)
+ 	           cout << "Username or Password is invalid" << endl;
+               else 
+ 	           cout << "Successful Login" << endl;   
+	       //writeToPass1(user); 
+        } 	
 	return 0;
 }
 
@@ -167,3 +153,25 @@ void writeToPass3(user_t user){
         myfile << "" << endl;
         myfile.close();
 }
+
+//Validates passwords and usernames. Returns true if valid 
+bool readPassword(user_t user, string search){
+	size-t pos; 
+	ifstream inFile;
+	string line;
+	inFile.open("pass1.txt");
+        if(!inFile){
+          cout << "Unable to open file" << endl;
+          exit(1);
+         }
+         //search for word 
+         if(inFile.is_open()) { 
+	   while(getline(inFile,line)){ 
+	     pos = line.find(search); 
+                if(pos!=string::npos)//string not found  
+ 		    return false; 
+                else 
+           }        return true; 
+         } 
+}
+	
