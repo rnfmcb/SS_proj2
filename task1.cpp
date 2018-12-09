@@ -49,7 +49,25 @@ int main() {
 	for (int i = 0; i < 32; i++) {
 		printf("%02x ", hashbuf[i]);
 	}
+	
 
 	printf("\n");*/
 	return 0;
+}
+
+void writeToPass1(user_t user){
+	//ofstream myfile;
+	myfile.open("pass1.txt");
+	myfile << user.username + " " + user.plaintextPass + "\n";
+	//myfile.close();
+}
+	
+void WriteToPass2{
+	myfile.open("pass2.txt");
+        myfile << user.username + " " + user.hashedPass + "\n";
+}
+
+void WriteToPass3{
+	myfile.open("pass3.txt");
+        myfile << user.username + " " + user.hashedPass + "\n";
 }
