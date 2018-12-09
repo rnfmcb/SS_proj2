@@ -25,42 +25,52 @@ int main() {
            if(login == 0){ //login 
               //Get user  name  
 	      char username[SIZE];	
-	      cout << "Please enter user name";
+	      cout << "Please enter user name\n";
               cin.getline(username,SIZE);
+              cin.get(); 
                // Will hold string for user  
               unsigned char usernamebuf[SIZE];
                  for(int i = 0; i < 100; i++){
                    user.username[i] = username[i]; 
                  }
+                 writeToPass1(user); 
                  
               //Get password 
               char password[SIZE];  
-              cout << "Please enter password"; 
+              cout << "Please enter password\n";
+              cin.getline(password,SIZE); 
+              cin.get();  
               unsigned char passwordbuf[SIZE]; 
                  for(int i = 0; i < 100; i++) { 
-                    passwordbuf[i] = password[i]; 
-                 }  
+                    user.plaintextPass[i]  = password[i]; 
+                 } 
+                writeToPass1(user);  
+            
              } 
              if (login == 1) { 
                 //Ask for user nbame 
                 char newName[SIZE]; 
-                cout << "Enter a user name"; 
-                cin.getline(newName, SIZE); 
+                cout << "Enter a user name\n"; 
+                cin.getline(newName, SIZE);
+                cin.get();  
                 //Holds string for new user
                 unsigned char newNamebuf[SIZE]; 
                   for(int i = 0; i < 100; i++){
-                    newNamebuf[i] = newName[i]; 
+                    user.username[i] = newName[i]; 
                   } 
+                writeToPass1(user); 
                 //Get a password
                 char newPassword[SIZE]; 
-                cout << "Enter a password"; 
-                cin.getline(newPassword,SIZE); 
+                cout << "Enter a password\n"; 
+                cin.getline(newPassword,SIZE);
+                cin.get();  
                 //Holds string for new password
                 unsigned char newPasswordbuf[SIZE]; 
                    for(int i = 0; i < 100; i++){ 
-                      newPasswordbuf[i] = newPassword[i]; 
+                      user.plaintextPass[i] = newPassword[i]; 
                    } 
               writeToPass1(user); 
+              
              }                   
 
 	// SHA256 hash, so only needs to be 32 bytes
