@@ -41,6 +41,7 @@ void gen_random(char *s, const int len) {
 void writeToPass1(user_t user); 
 void writeToPass2(user_t user);
 void writeToPass3(user_t user);
+bool validate(user_t user, char search[]); 
 int main() {
 	//THIS IS A TEST CAN I PUSH WAHT;
         //Ask user to login or create account 
@@ -128,11 +129,8 @@ int main() {
 		cin.getline(newName, SIZE);
 		cin.get();  
                 //Checks if username is valid 
-                int isUser = 0; 
-    		for(int i = 0; i < SIZE; i++){ 
- 		  if(newName[i] != user.username[i])
-                    isUser = 1; 
-       	        }
+                bool isUser = validate(user, &newName[SIZE]); 
+
 		//writeToPass1(user); 
        	         //Get a password
 		char newPassword[SIZE]; 
@@ -140,13 +138,10 @@ int main() {
 		cin.getline(newPassword,SIZE);
 		cin.get();  
                 //Checks if password is valid 
-                int isPassword; 
-		  for(int i = 0; i < SIZE; i++){ 
-		     if(newName[i] != user.username[i]) 
-                       isPassword = 1; 
-		}
+                bool isPassword = validate(user,&newPassword[SIZE]);  
+	
                //Prints an error if password or username is invalid 
-               if(isPassword == 1 || isUser == 1)
+               if(isPassword == false || isUser == false)
  	           cout << "Username or Password is invalid" << endl;
                else 
  	           cout << "Successful Login" << endl;   
@@ -157,8 +152,6 @@ int main() {
 
 void writeToPass1(user_t user){
 	ofstream myfile;
-	myfile.open("pass1.txt");
-	myfile << user.username; 
 	myfile << " ";
 	myfile << user.plaintextPass << endl;
 	myfile.close();
@@ -195,19 +188,28 @@ void writeToPass3(user_t user){
 }
 
 //Validates passwords and usernames. Returns true if valid 
-bool readPassword(user_t user, string search){
+bool validate(user_t user, char search[SIZE]){
+        //Hash username or password 
+        char compare[SIZE]; 
+	char hexBuffer[128];
+        hexBuffer[127] = 0;
+        for(int i = 0; i < 32; i++) { 
+	        sprintf(&hexBuffer[2 * i], "%02x ",search[i]); 
+        }         
 	size_t pos; 
 	ifstream inFile;
 	string line;
 	inFile.open("pass1.txt");
         if(!inFile){
-          cout << "Unable to open file" << endl;
+          cout << "You do not have an account" << endl;
           exit(1);
          }
+         //convert search array to string 
+         string str(search); 
          //search for word 
          if(inFile.is_open()) { 
 	   while(getline(inFile,line)){ 
-	     pos = line.find(search); 
+	     pos = line.find(str); 
                 if(pos!=string::npos)//string not found  
  		    return false; 
                 else 
