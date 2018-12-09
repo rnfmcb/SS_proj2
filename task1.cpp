@@ -156,7 +156,7 @@ void writeToPass3(user_t user){
 
 //Validates passwords and usernames. Returns true if valid 
 bool readPassword(user_t user, string search){
-	size-t pos; 
+	size_t pos; 
 	ifstream inFile;
 	string line;
 	inFile.open("pass1.txt");
@@ -171,7 +171,7 @@ bool readPassword(user_t user, string search){
                 if(pos!=string::npos)//string not found  
  		    return false; 
                 else 
-           }        return true; 
+                   return true; 
+            }
          } 
 }
-	
