@@ -7,8 +7,9 @@ OBJS	=	task1.o
 $(TARGET):	$(OBJS)
 	$(CC) -o $(TARGET) $(OBJS)
 
-ssfun.o:	task1.cpp 
+task1.o:	task1.cpp 
 	$(CC) -c  task1.cpp
 
 clean:
-	rm -f *.o $(TARGET) pass1.txt
+	rm -f *.o $(TARGET) pass1.txt pass2.txt pass3.txt
+
