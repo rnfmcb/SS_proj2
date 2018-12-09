@@ -47,6 +47,9 @@ int main() {
 	srand(time(NULL));
 	char salt[20];
 	unsigned char ibuf[SIZE];
+        //Initialize username array 
+        for(int i = 0; i < SIZE; i++)
+           user.username[i] = 0; 
 	
 	int login; 
 	cout << "Type 1 to login and 0 to create a new account:" << endl; 
@@ -55,21 +58,40 @@ int main() {
 		cout << "Please enter an eight charactor aphaneumeric user name\n";
 		cin.ignore(100,'\n');
 		cin.getline(user.username,SIZE);
-		if (user.username[9] != 0)
-		   cout << "Username needs to be eight charactors long" << endl; 
-                char c; int i = 0; 
-		while(user.username[i]) { 
+		if (user.username[8] != 0){ 
+		   cout << "Username needs to be no more then eight charactors long" << endl; 
+                   return 1; 
+                } 
+                char c; int i = 0; int validate = 0; 
+		while(validate = 0) { 
 		   c = user.username[i]; 
 		   if(isupper(c)){  
-                      cout << "Username needs to be lower case" << endl;                i++; 
+                      cout << "Username needs to be lower case" << endl; 
+                      return 1; 
                    }  
+                  i++; 
+                  validate = 1; 
                  }
     
-		cout << "Please enter an eight charactor alphaneumeric password. Please no capital letters\n";	//You may be wondering how this works
-		cin.getline(user.plaintextPass,SIZE);   
-
+		cout << "Please enter an eight charactor alphaneumeric password with no capital letters\n";	//You may be wondering how this works
+		cin.getline(user.plaintextPass,SIZE);
 		cout << endl;		
-		
+		 if (user.plaintextPass[8] != 0){
+                   cout << "Password needs to be no more then eight charactors long" << endl;
+                   return 1;
+                }
+                validate = 0; i = 0; 
+                while(validate = 0) {
+                   c = user.plaintextPass[i];
+                   if(isupper(c)){
+                      cout << "Password  needs to be lower case" << endl;
+                      return 1;
+                   }
+                  i++;
+                  validate = 1;
+                 }
+
+                 
 		SHA256(ibuf,strlen(user.plaintextPass),user.hashedPass); //This hashes the password with NO salt
 		
 		writeToPass1(user);  
