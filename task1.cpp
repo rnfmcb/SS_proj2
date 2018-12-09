@@ -55,7 +55,15 @@ int main() {
 		cout << "Please enter an eight charactor aphaneumeric user name\n";
 		cin.ignore(100,'\n');
 		cin.getline(user.username,SIZE);
-                
+		if (user.username[9] != 0)
+		   cout << "Username needs to be eight charactors long" << endl; 
+                char c; int i = 0; 
+		while(user.username[i]) { 
+		   c = user.username[i]; 
+		   if(isupper(c)){  
+                      cout << "Username needs to be lower case" << endl;                i++; 
+                   }  
+                 }
     
 		cout << "Please enter an eight charactor alphaneumeric password. Please no capital letters\n";	//You may be wondering how this works
 		cin.getline(user.plaintextPass,SIZE);   
