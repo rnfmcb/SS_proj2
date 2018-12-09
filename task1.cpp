@@ -85,7 +85,7 @@ int main() {
                 while(validate = 0) {
                    c = user.plaintextPass[i];
                    if(isupper(c)){
-                      cout << "Password  needs to be lower case" << endl;
+                      cout << "Password needs to be lower case" << endl;
                       return 1;
                    }
                   i++;
@@ -141,7 +141,7 @@ int main() {
                 bool isPassword = validate(user,&newPassword[SIZE]);  
 	
                //Prints an error if password or username is invalid 
-               if(isPassword == false || isUser == false)
+               if(isPassword == false)
  	           cout << "Username or Password is invalid" << endl;
                else 
  	           cout << "Successful Login" << endl;   
@@ -199,13 +199,14 @@ bool validate(user_t user, char search[SIZE]){
 	size_t pos; 
 	ifstream inFile;
 	string line;
-	inFile.open("pass1.txt");
+	inFile.open("pass2.txt");
         if(!inFile){
           cout << "You do not have an account" << endl;
           exit(1);
          }
          //convert search array to string 
          string str(search); 
+         std::cout << search << std::endl; 
          //search for word 
          if(inFile.is_open()) { 
 	   while(getline(inFile,line)){ 
@@ -215,5 +216,13 @@ bool validate(user_t user, char search[SIZE]){
                 else 
                    return true; 
             }
-         } 
-}
+           }
+} 
+
+
+
+
+
+
+
+
