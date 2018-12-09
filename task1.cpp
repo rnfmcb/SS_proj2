@@ -34,15 +34,34 @@ int main() {
               //Get password 
               char password[SIZE];  
               cout << "Please enter password"; 
-              cin.getline(password,SIZE); 
-              //Holds string for password 
               unsigned char passwordbuf[SIZE]; 
                  for(int i = 0; i < 100; i++) { 
                     passwordbuf[i] = password[i]; 
                  }  
-             }                       
+             } 
+             if (login == 1) { 
+                //Ask for user nbame 
+                char newName[SIZE]; 
+                cout << "Enter a user name"; 
+                cin.getline(newName, SIZE); 
+                //Holds string for new user
+                unsigned char newNamebuf[SIZE]; 
+                  for(int i = 0; i < 100; i++){
+                    newNamebuf[i] = newName[i]; 
+                  } 
+                //Get a password
+                char newPassword[SIZE]; 
+                cout << "Enter a password"; 
+                cin.getline(newPassword,SIZE); 
+                //Holds string for new password
+                unsigned char newPasswordbuf[SIZE]; 
+                   for(int i = 0; i < 100; i++){ 
+                      newPasswordbuf[i] = newPassword[i]; 
+                   } 
+             }                     
 
 	// SHA256 hash, so only needs to be 32 bytes
+	//
 	//unsigned char hashbuf[32];
 	
 	/*cout << "Before hash:" << endl;
