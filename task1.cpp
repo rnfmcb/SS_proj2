@@ -18,9 +18,9 @@ int main() {
 
 
          //Ask user to login or create account 
-         char login[SIZE]; 
+         int login; 
          cout << "Type 0 to login and 1 to create a new account";  
-         cin.getline(login,SIZE);  
+         cin >> login;  
            if(login == 0){ //login 
               //Get user  name  
 	      char username[SIZE];	
