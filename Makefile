@@ -11,4 +11,4 @@ ssfun.o:	task1.cpp
 	$(CC) -c  task1.cpp
 
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o $(TARGET) pass1.txt
