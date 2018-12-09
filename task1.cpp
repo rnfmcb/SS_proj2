@@ -20,26 +20,27 @@ int main() {
 
          //Ask user to login or create account 
          int login; 
-         cout << "Type 0 to login and 1 to create a new account\n";  
+         cout << "Type 0 to login and 1 to create a new account:" << endl; 
          cin >> login;  
            if(login == 0){ //login 
               //Get user  name  
 	      char username[SIZE];	
 	      cout << "Please enter user name\n";
-              cin.getline(username,SIZE);
-              cin.get(); 
+              cin.ignore(100,'\n');
+		cin.getline(user.username,SIZE);
+      
                // Will hold string for user  
               unsigned char usernamebuf[SIZE];
                  for(int i = 0; i < 100; i++){
-                   user.username[i] = username[i]; 
+                   //user.username[i] = username[i]; 
                  }
-                 writeToPass1(user); 
-                 
+                 ////writeToPass1(user); 
+              //cin.get();   
               //Get password 
               char password[SIZE];  
               cout << "Please enter password\n";
               cin.getline(password,SIZE); 
-              cin.get();  
+              //cin.get();  
               unsigned char passwordbuf[SIZE]; 
                  for(int i = 0; i < 100; i++) { 
                     user.plaintextPass[i]  = password[i]; 
