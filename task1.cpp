@@ -13,6 +13,7 @@ struct user_t {
 	char hashedPass[100];
 }user;
 
+void writeToPass1(user_t user); 
 
 int main() {
 
@@ -26,11 +27,12 @@ int main() {
 	      char username[SIZE];	
 	      cout << "Please enter user name";
               cin.getline(username,SIZE);
-	      // Will hold string for user  
+               // Will hold string for user  
               unsigned char usernamebuf[SIZE];
                  for(int i = 0; i < 100; i++){
-                   usernamebuf[i] = username[i]; 
+                   user.username[i] = username[i]; 
                  }
+                 
               //Get password 
               char password[SIZE];  
               cout << "Please enter password"; 
@@ -58,7 +60,8 @@ int main() {
                    for(int i = 0; i < 100; i++){ 
                       newPasswordbuf[i] = newPassword[i]; 
                    } 
-             }                     
+              writeToPass1(user); 
+             }                   
 
 	// SHA256 hash, so only needs to be 32 bytes
 	//
