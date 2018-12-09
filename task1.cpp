@@ -52,11 +52,12 @@ int main() {
 	cout << "Type 1 to login and 0 to create a new account:" << endl; 
 	cin >> login;  
 	if(login == 0){ //login 
-		cout << "Please enter user name\n";
+		cout << "Please enter an eight charactor aphaneumeric user name\n";
 		cin.ignore(100,'\n');
 		cin.getline(user.username,SIZE);
+                
     
-		cout << "Please enter password\n";	//You may be wondering how this works
+		cout << "Please enter an eight charactor alphaneumeric password. Please no capital letters\n";	//You may be wondering how this works
 		cin.getline(user.plaintextPass,SIZE);   
 
 		cout << endl;		
