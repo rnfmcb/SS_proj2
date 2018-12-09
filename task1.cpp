@@ -20,7 +20,7 @@ int main() {
 
          //Ask user to login or create account 
          int login; 
-         cout << "Type 0 to login and 1 to create a new account";  
+         cout << "Type 0 to login and 1 to create a new account\n";  
          cin >> login;  
            if(login == 0){ //login 
               //Get user  name  
