@@ -30,7 +30,16 @@ int main() {
               unsigned char usernamebuf[SIZE];
                  for(int i = 0; i < 100; i++){
                    usernamebuf[i] = username[i]; 
-                 } 
+                 }
+              //Get password 
+              char password[SIZE];  
+              cout << "Please enter password"; 
+              cin.getline(password,SIZE); 
+              //Holds string for password 
+              unsigned char passwordbuf[SIZE]; 
+                 for(int i = 0; i < 100; i++) { 
+                    passwordbuf[i] = password[i]; 
+                 }  
              }                       
 
 	// SHA256 hash, so only needs to be 32 bytes
