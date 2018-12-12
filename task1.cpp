@@ -41,7 +41,7 @@ void gen_random(char *s, const int len) {
 void writeToPass1(user_t user); 
 void writeToPass2(user_t user);
 void writeToPass3(user_t user);
-bool validate(user_t user, char search[]); 
+bool validate(user_t user); 
 int main() {
 	//THIS IS A TEST CAN I PUSH WAHT;
         //Ask user to login or create account 
@@ -52,8 +52,8 @@ int main() {
         for(int i = 0; i < SIZE; i++)
            user.username[i] = 0; 
 	
-	int login; 
-	cout << "Type 1 to login and 0 to create a new account:" << endl; 
+	int login;
+	cout << "Type 1 to login and 0 to create a new account" << endl; 
 	cin >> login;  
 	if(login == 0){ //login 
 		cout << "Please enter an eight charactor aphaneumeric user name\n";
@@ -124,35 +124,30 @@ int main() {
 		
 	} else if (login == 1) { 
              //Ask for user name 
-		char newName[SIZE]; 
-		cout << "Enter a user name\n"; 
-		cin.getline(newName, SIZE);
-		cin.get();  
-                //Checks if username is valid 
-                bool isUser = validate(user, &newName[SIZE]); 
-
-		//writeToPass1(user); 
-       	         //Get a password
-		char newPassword[SIZE]; 
+		cout << "Enter a user name\n";
+		cin.ignore(100,'\n');  
+		cin.getline(user.username,SIZE);  	 
+       	     //Get a password 
 		cout << "Enter a password\n"; 
-		cin.getline(newPassword,SIZE);
-		cin.get();  
-                //Checks if password is valid 
-                bool isPassword = validate(user,&newPassword[SIZE]);  
-	
-               //Prints an error if password or username is invalid 
-               if(isPassword == false)
+		cin.getline(user.plaintextPass,SIZE);   
+             //Checks if password is valid 
+               bool isPassword = validate(user);  
+	       writeToPass1(user); 
+             //Prints an error if password or username is invalid 
+             /*  if(isPassword == false)
  	           cout << "Username or Password is invalid" << endl;
                else 
- 	           cout << "Successful Login" << endl;   
+ 	           cout << "Successful Login" << endl;*/   
 	       //writeToPass1(user); 
         } 	
 	return 0;
 }
 
-void writeToPass1(user_t user){
+void writeToPass1(user_t user){ 
 	ofstream myfile;
-	myfile << " ";
+	myfile.open("pass1.txt");
+	myfile << user.username;  
+	myfile << " "; 
 	myfile << user.plaintextPass << endl;
 	myfile.close();
 }
@@ -188,14 +183,15 @@ void writeToPass3(user_t user){
 }
 
 //Validates passwords and usernames. Returns true if valid 
-bool validate(user_t user, char search[SIZE]){
+bool validate(user_t user){
         //Hash username or password 
         char compare[SIZE]; 
 	char hexBuffer[128];
-        hexBuffer[127] = 0;
+        hexBuffer[128] = 0;
         for(int i = 0; i < 32; i++) { 
-	        sprintf(&hexBuffer[2 * i], "%02x ",search[i]); 
-        }         
+	        sprintf(&hexBuffer[2 * i], "%02x ",user.hashedPass[i]); 
+        }
+                 
 	size_t pos; 
 	ifstream inFile;
 	string line;
@@ -204,13 +200,15 @@ bool validate(user_t user, char search[SIZE]){
           cout << "You do not have an account" << endl;
           exit(1);
          }
-         //convert search array to string 
-         string str(search); 
-         std::cout << search << std::endl; 
+        
+        // string str(user.username);
+ 	cout << user.username << endl;
+	cout << user.plaintextPass << endl;
+	cout << user.hashedPass << endl;     
          //search for word 
          if(inFile.is_open()) { 
 	   while(getline(inFile,line)){ 
-	     pos = line.find(str); 
+	     pos = line.find(user.username); 
                 if(pos!=string::npos)//string not found  
  		    return false; 
                 else 
