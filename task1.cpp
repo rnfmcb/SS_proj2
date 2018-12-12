@@ -134,12 +134,16 @@ int main() {
                bool isPassword = validate(user);  
 	       writeToPass1(user); 
              //Prints an error if password or username is invalid 
-             /*  if(isPassword == false)
+               if(isPassword == false)
  	           cout << "Username or Password is invalid" << endl;
                else 
- 	           cout << "Successful Login" << endl;*/   
+ 	           cout << "Successful Login" << endl;   
 	       //writeToPass1(user); 
-        } 	
+        }
+	else {
+	    cout << "Invalid option" << endl; 
+	    return 1; 
+	}  	
 	return 0;
 }
 
@@ -185,32 +189,34 @@ void writeToPass3(user_t user){
 //Validates passwords and usernames. Returns true if valid 
 bool validate(user_t user){
         //Hash username or password 
-        char compare[SIZE]; 
-	char hexBuffer[128];
-        hexBuffer[128] = 0;
-        for(int i = 0; i < 32; i++) { 
-	        sprintf(&hexBuffer[2 * i], "%02x ",user.hashedPass[i]); 
-        }
+       // char compare[SIZE]; 
+	//char hexBuffer[128];
+        //hexBuffer[128] = 0;
+        //for(int i = 0; i < 32; i++) { 
+	  //      sprintf(&hexBuffer[2 * i], "%02x ",user.hashedPass[i]); 
+       // }
                  
-	size_t pos; 
+	size_t pos;
+	size_t pos1;  
 	ifstream inFile;
 	string line;
-	inFile.open("pass2.txt");
+	inFile.open("pass1.txt");
         if(!inFile){
           cout << "You do not have an account" << endl;
           exit(1);
          }
         
         // string str(user.username);
- 	cout << user.username << endl;
-	cout << user.plaintextPass << endl;
-	cout << user.hashedPass << endl;     
+ 	//cout << user.username << endl;
+	//cout << user.plaintextPass << endl;
+	//cout << user.hashedPass << endl;     
          //search for word 
          if(inFile.is_open()) { 
 	   while(getline(inFile,line)){ 
-	     pos = line.find(user.username); 
-                if(pos!=string::npos)//string not found  
- 		    return false; 
+	     pos = line.find(user.username);  
+                if(pos!=string::npos)//username not found     
+ 		    return false;
+		//Look at same line for password
                 else 
                    return true; 
             }
